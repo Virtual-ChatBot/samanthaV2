@@ -1,0 +1,71 @@
+/*
+	LE SSERAFIM Templates by Park Seong-Won
+	https://github.com/beemeel | powerpoopoo@naver.com
+*/
+			/*전체 화면 적용*/
+			body {		
+				box-sizing: content-box;
+			    font-family: "Lato", sans-serif;
+			}
+			
+			/*왼쪽 상단 로고 적용*/
+			.login-main-text {
+			    padding: 12px;
+			    color: #fff;
+			}
+			.login-main-text h2 {
+			    font-weight: 300;
+			}
+			
+			/*왼쪽 화면 적용*/
+			.sidenav {
+			    height: 110%;
+			    background-color: #000;
+			    overflow-x: hidden;
+			}
+			
+			/*오른쪽 화면 적용*/
+			.main {
+			}
+			
+			/*반응형 미디어 쿼리 사용*/
+			
+			/*모바일*/			
+			@media (max-width: 450px) {
+				
+				.form-group {
+			        margin-top: 3%;
+			    }
+			}
+			@media (max-height: 450px) {
+			    
+
+			}
+			
+			/*데스크탑*/
+			@media (min-width: 768px){
+			    .main {
+			        margin-left: 65%; 
+			    }
+			
+			    .sidenav {
+			        width: 65%;
+			        position: fixed;
+			        z-index: 1;
+			        top: 0;
+			        left: 0;
+			    }
+			
+			    .login-form {
+			        margin-top: 100%;
+			        margin-left: 20%;
+			        width:100%;
+			    }
+			    
+			    /*아이디, 비밀번호 사이간격*/
+			    .form-group {
+			        margin-top: 3%;
+			    }
+			}
+			
+			

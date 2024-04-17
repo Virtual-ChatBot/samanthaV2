@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration
+		PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- MyBatis Configuration -->
+
+<configuration>
+
+	<settings>
+		<setting name="callSettersOnNulls" value="true"/>
+	</settings>
+
+	<!-- FQCN(Full Qualified Class Name) Alias -->
+	<typeAliases>
+		<typeAlias alias="userVO" type="site.beemil.samanthaV2.vo.UserVO" />
+	</typeAliases>
+
+	<!-- SQL Definition :: file include -->
+	<mappers>
+		<mapper resource="mapper/UserMapper.xml"/>
+	</mappers>
+
+</configuration>

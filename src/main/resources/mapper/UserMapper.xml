@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.beemil.samanthaV2.dao.UserDAO">
+ 	
+ 	<resultMap id="userSelectMap" type="userVO">
+		<result property="userId" 	column="user_id" 	jdbcType="VARCHAR"/>
+		<result property="password" column="password" 	jdbcType="VARCHAR"/>
+		<result property="nickName"	column="nick_name"	jdbcType="VARCHAR"/>
+		<result property="role" 	column="role" 		jdbcType="VARCHAR"/>
+		<result property="regDate" 	column="reg_date" 	jdbcType="DATE"/>
+	</resultMap>
+ 	
+	 <!-- SQL : SELECT ONE -->
+	 <select id="login" parameterType="string" resultMap="userSelectMap">
+		SELECT
+			user_id, password, nick_name, role, reg_date
+		FROM user
+		WHERE
+		    user_id = #{value}
+	 </select>
+
+</mapper>
