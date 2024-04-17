@@ -7,12 +7,13 @@
 ## Specifications
 * Platform: Java 17
 * Project Type: Gradle
+* Framework: Spring Boot
+* Database: PostgreSQL
 
 ## You cannot use this source alone:
 * Naver cloud service is paid and a security key is used.
-* application.properties is controlled through the Jenkins library.
+* application.yml is controlled through the Jenkins library.
 * So you won't find application.yml in my repository.
-* Please create the application.yml file at src/main/resources'.
 
 <img src="./app.png" alt="Streaming App" width="200"/>
 
