@@ -6,9 +6,9 @@
 
 ## Specifications
 * Platform: Java 17
+* Project Type: Gradle
 * Framework: Spring Boot
 * Database: PostgreSQL
-* Project Type: Gradle
 
 ## You cannot use this source alone:
 * Naver cloud service is paid and a security key is used.
