@@ -1,4 +1,4 @@
-# Samantha V1
+# Samantha V2
 
 * Voice recognition is possible through the microphone.
 * Samantha answers by text and voice.
