@@ -46,7 +46,7 @@ public class DatabaseConfig {
 		//mybatis-config 연결
 		sessionFactory.setConfigLocation(resolver.getResource("mapper/mybatis-config.xml"));
 
-		//mapper 직접 연결
+		//mapper 직접 연결시 사용
 		//sessionFactory.setMapperLocations(resolver.getResources("mapper/*.xml"));
 
 		return sessionFactory.getObject();

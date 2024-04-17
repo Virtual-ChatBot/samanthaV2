@@ -1,6 +1,9 @@
 package site.beemil.samanthaV2.vo;
+import lombok.Setter;
+
 import java.sql.Date;
 
+@Setter
 public class UserVO {
 
 	///Field
@@ -15,43 +18,23 @@ public class UserVO {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getPassword() {
+    public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getNickName() {
+    public String getNickName() {
 		return nickName;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
-
-	public String getRole() {
+    public String getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public Date getRegDate() {
+    public Date getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
-	}
-
-	@Override
+    @Override
 	public String toString() {
 		return "User{" +
 				"userId='" + userId + '\'' +

@@ -5,8 +5,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,27 +21,20 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+@Component
 @RestController
 @RequestMapping("/bot/*")
 public class BotRestController {
 
     ///Field
     private static final Logger logger = LoggerFactory.getLogger(BotRestController.class);
-    private static Properties config;
+    private final Properties config = new Properties();
 
     ///Constructor
-    public BotRestController() {
-
+    public BotRestController(@Value("classpath:application.yml") Resource configFile) {
         try {
-
-            String filePath = Objects.requireNonNull(getClass().getClassLoader().getResource("application.properties")).getFile();
-            FileInputStream fis = new FileInputStream(filePath);
-            config = new Properties();
-            config.load(fis);
-            fis.close();
-
+            config.load(configFile.getInputStream());
         } catch (IOException e) {
-
             logger.error("Failed to load API configuration properties", e);
         }
     }
