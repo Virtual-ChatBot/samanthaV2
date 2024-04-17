@@ -51,7 +51,7 @@ public class SshTunnelingUtil {
             session.connect();	// ssh 연결
 
             // 로컬pc의 남는 포트 하나와 원격 접속한 pc의 db포트 연결
-            forwardedPort = session.setPortForwardingL(3306, "localhost", databasePort);
+            forwardedPort = session.setPortForwardingL(5432, "localhost", databasePort);
 
         } catch (JSchException e){
             this.closeSSH();

@@ -17,7 +17,7 @@
 	 <select id="login" parameterType="string" resultMap="userSelectMap">
 		SELECT
 			user_id, password, nick_name, role, reg_date
-		FROM user
+		FROM member
 		WHERE
 		    user_id = #{userId}
 	 </select>

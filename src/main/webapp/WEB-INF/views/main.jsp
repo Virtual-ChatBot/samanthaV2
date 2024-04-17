@@ -212,6 +212,7 @@
 							<h2>Project</h2>
 							<ul class="icons">
 								<li><a href="https://github.com/Virtual-ChatBot/samanthaV1" target="_blank" class="icon brands style2 fa-git"><span class="label">git</span></a></li>
+								<li><a href="https://github.com/Virtual-ChatBot/samanthaV2" target="_blank" class="icon brands style2 fa-git"><span class="label">git</span></a></li>
 							</ul>
 						</div>
 					</section>
