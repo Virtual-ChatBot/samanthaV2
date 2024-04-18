@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.4'
     id 'io.spring.dependency-management' version '1.1.4'
-    id 'war'
 }
 
 group = 'site.beemil'
@@ -13,17 +12,13 @@ java {
     sourceCompatibility = '17'
 }
 
-bootWar {
-    archiveFileName = "ROOT.war"
-}
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:3.2.4'
-    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:10.1.20'
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:10.1.19'
     implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
     implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
