@@ -5,7 +5,7 @@
 * Samantha moves the look.
 
 ## Specifications
-* OpenJDK: temurin-17.0.10
+* OpenJDK: Temurin-17.0.10
 * Server: Tomcat 10.1.19
 * Project Type: Gradle
 * Framework: Spring Boot
