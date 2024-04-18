@@ -5,7 +5,7 @@
 * Samantha moves the look.
 
 ## Specifications
-* Platform: Java 17
+* OpenJDK: temurin-17.0.10
 * Project Type: Gradle
 * Framework: Spring Boot
 * Database: PostgreSQL
