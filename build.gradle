@@ -12,6 +12,10 @@ java {
     sourceCompatibility = '17'
 }
 
+bootJar {
+    archiveFileName = "ROOT.jar"
+}
+
 repositories {
     mavenCentral()
 }
