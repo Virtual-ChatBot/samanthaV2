@@ -13,7 +13,7 @@ java {
     sourceCompatibility = '17'
 }
 
-bootJar {
+bootWar {
     archiveFileName = "ROOT.war"
 }
 
