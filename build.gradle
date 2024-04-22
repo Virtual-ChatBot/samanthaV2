@@ -15,9 +15,6 @@ java {
 
 bootWar {
     archiveFileName = 'ROOT.war'
-    from("src/main/resources") {
-        include("application.yml")
-    }
 }
 
 repositories {

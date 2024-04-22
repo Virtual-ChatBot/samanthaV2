@@ -1,0 +1,63 @@
+spring:
+  mvc:
+    # View
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  # Connection Pool
+  datasource:
+    hikari:
+      driver-class-name: org.postgresql.Driver
+      jdbc-url: jdbc:postgresql://112.172.203.227:5432/pgwatch2
+      username: pgwatch2
+      password: pgwatch2admin
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      max-lifetime: 1800000
+      idle-timeout: 600000
+      pool-name: samantha
+      auto-commit: true
+  # DevTools
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+# Server
+server:
+  servlet:
+    jsp:
+      init-parameters:
+        development: true
+    encoding:
+      enabled: true
+      charset: utf-8
+  tomcat:
+    uri-encoding: UTF-8
+
+api:
+  bot:
+    # Naver Cloud ChatBot API URL
+    url: https://04011hwibe.apigw.ntruss.com/custom/v1/14097/c5422c052bfbd7bbd9764e0467688b62193fec4fa32a1b13af28d1708d5870ec
+    client:
+      # Naver Cloud ChatBot API Secret
+      secret: QlNOZmtrUEt6Y1RTeEh5dUtUdEtkY3F5eVZBaFBsWFI=
+
+  stt:
+    # Naver Cloud SpeechToText API URL
+    url: https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=Kor
+    client:
+      # Naver Cloud SpeechToText API ID
+      id: pcye1ye8pv
+      # Naver Cloud SpeechToText API Secret
+      secret: 2P6hy1ptk5lGIisDGRgUeEdMSW2KDWbfDJoJqEoA
+
+# SSH Tunneling Connection
+ssh:
+  host: 112.172.203.227
+  ssh_port: 22
+  user: root
+  private_key: C://Users/default.ppk
+  database_port: 5432
