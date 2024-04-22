@@ -13,8 +13,11 @@ java {
     sourceCompatibility = '17'
 }
 
-bootWar{
+bootWar {
     archiveFileName = 'ROOT.war'
+    from("src/main/resources") {
+        include("application.yml")
+    }
 }
 
 repositories {
