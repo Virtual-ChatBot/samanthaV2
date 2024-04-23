@@ -45,8 +45,12 @@ pipeline {
     stages {
         stage('read configFile') {
             steps {
+                configFileProvider([configFile(fileId: 'prod', targetLocation: 'src/main/resources/application.yml')]) {
+                    sh "cat src/main/resources/application.yml"
+                }
+
                 configFileProvider([configFile(fileId: 'application-prod', targetLocation: 'src/main/resources/application-prod.yml')]) {
-                    sh "cat src/main/resources/application-prod.yml"
+                                    sh "cat src/main/resources/application-prod.yml"
                 }
             }
         }
