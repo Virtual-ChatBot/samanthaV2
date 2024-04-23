@@ -43,6 +43,20 @@ pipeline {
     agent any
 
     stages {
+        stage('read configFile') {
+            steps {
+                configFileProvider([configFile(fileId: 'prod', targetLocation: 'src/main/resources/application.yml')]) {
+                    sh "cat src/main/resources/application.yml"
+                }
+            }
+
+            steps {
+                configFileProvider([configFile(fileId: 'application-prod', targetLocation: 'src/main/resources/application-prod.yml')]) {
+                    sh "cat src/main/resources/application-prod.yml"
+                }
+            }
+        }
+
         stage("Build") {
         	// (3)
             steps {

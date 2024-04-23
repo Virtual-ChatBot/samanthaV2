@@ -13,10 +13,6 @@ java {
     sourceCompatibility = '17'
 }
 
-bootWar {
-    archiveFileName = 'ROOT.war'
-}
-
 repositories {
     mavenCentral()
 }
@@ -33,4 +29,8 @@ dependencies {
     implementation 'com.github.mwiede:jsch:0.2.17'
     compileOnly 'org.projectlombok:lombok:1.18.30'
     compileOnly 'org.springframework.boot:spring-boot-devtools'
+}
+
+bootWar {
+    archiveFileName = 'ROOT.war'
 }

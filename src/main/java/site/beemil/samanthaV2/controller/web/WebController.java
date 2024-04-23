@@ -1,10 +1,10 @@
-package site.beemil.samanthaV2.controller.common;
+package site.beemil.samanthaV2.controller.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class CommonController {
+public class WebController {
 
     @RequestMapping("/")
     public String index() {
