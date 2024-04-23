@@ -50,7 +50,7 @@ pipeline {
                 }
 
                 configFileProvider([configFile(fileId: 'application-prod', targetLocation: 'src/main/resources/application-prod.yml')]) {
-                                    sh "cat src/main/resources/application-prod.yml"
+                    sh "cat src/main/resources/application-prod.yml"
                 }
             }
         }
