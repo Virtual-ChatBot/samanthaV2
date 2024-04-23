@@ -1,6 +1,6 @@
 # (1)
-REPOSITORY=/home
-BUILD_PATH=$(ls -tr ${REPOSITORY}/build/lib/*.war | tail -1)
+REPOSITORY=/home/samantha/tomcat_data
+BUILD_PATH=$(ls -tr ${REPOSITORY}/prod1/*.war | tail -1)
 WAR_NAME=$(basename $BUILD_PATH)
 echo "> build file: $WAR_NAME"
 
