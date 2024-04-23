@@ -27,5 +27,3 @@
 * linkedin: https://www.linkedin.com/in/beemil
 * github: https://github.com/Virtual-ChatBot
 * youtube: https://www.youtube.com/@beemil
-
-![app](./agents_app.png)
