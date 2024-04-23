@@ -54,6 +54,7 @@ pipeline {
         stage("Build") {
         	// (3)
             steps {
+                sh "rm -rf build"
                 sh "chmod +x gradlew"
                 sh "./gradlew clean bootWar"
             }

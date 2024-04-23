@@ -37,4 +37,4 @@ fi
 
 # (4)
 echo "> Run application."
-nohup java -bootWar -Dspring.profiles.active=prod $APPLICATION_WAR > /dev/null 2> /dev/null < /dev/null &
+nohup java -war -Dspring.profiles.active=prod $APPLICATION_WAR > /dev/null 2> /dev/null < /dev/null &

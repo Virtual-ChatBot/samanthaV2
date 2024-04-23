@@ -1,6 +1,6 @@
 #!/bin/bash
 # (1)
-url="http://112.172.203.227:8081/board/1"
+url="http://112.172.203.227:8081"
 
 timeout=5
 online=false
