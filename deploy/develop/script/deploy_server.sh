@@ -6,7 +6,7 @@ echo "> build file: $WAR_NAME"
 
 # (2)
 echo "> copy build file"
-DEPLOY_PATH=${REPOSITORY}/deploy/
+DEPLOY_PATH=${REPOSITORY}/prod1/
 if [ ! -d $DEPLOY_PATH ]; then
   mkdir $DEPLOY_PATH
 fi
