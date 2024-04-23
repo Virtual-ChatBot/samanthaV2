@@ -12,16 +12,15 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import site.beemil.samanthaV2.util.SshTunnelingUtil;
 
 @Configuration
 public class DatabaseConfig {
 
-	private final SshTunnelingUtil sshTunnelingUtil;
+	/* private final SshTunnelingUtil sshTunnelingUtil;
 
 	public DatabaseConfig(SshTunnelingUtil sshTunnelingUtil) {
 		this.sshTunnelingUtil = sshTunnelingUtil;
-	}
+	} */
 
 	@Bean
 	@ConfigurationProperties(prefix = "spring.datasource.hikari")
@@ -31,7 +30,7 @@ public class DatabaseConfig {
 
 	@Bean
 	public DataSource dataSource(HikariConfig hikariConfig) {
-		// SSH 연결
+		// SSH Tunneling 연결 시 사용
 		//sshTunnelingUtil.buildSshConnection();
 
 		return new HikariDataSource(hikariConfig);
@@ -46,7 +45,7 @@ public class DatabaseConfig {
 		//mybatis-config 연결
 		sessionFactory.setConfigLocation(resolver.getResource("mapper/mybatis-config.xml"));
 
-		//mapper 직접 연결시 사용
+		//mapper 직접 연결 시 사용
 		//sessionFactory.setMapperLocations(resolver.getResources("mapper/*.xml"));
 
 		return sessionFactory.getObject();
