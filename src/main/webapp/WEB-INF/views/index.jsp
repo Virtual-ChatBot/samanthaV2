@@ -102,7 +102,7 @@
 
 						<button class="btn btn-dark" type="button">관리자 로그인</button>
 
-						<a class="btn btn-danger" role="button" href="../visit">비회원 입장</a>
+						<a class="btn btn-danger" role="button" href="../user/visit">비회원 입장</a>
 						<!--일부 화면만 전환 가능<a class="btn btn-danger" role="button" onclick="acyncMovePage('/user/addUser')">회원 가입</a>-->
 
 					</div>

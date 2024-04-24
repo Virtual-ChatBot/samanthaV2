@@ -26,6 +26,15 @@ public class UserController {
 		System.out.println("::"+getClass()+".setUserService Call.........");
 	}
 
+	@RequestMapping("visit")
+	public String visit() {
+
+		System.out.println("::");
+		System.out.println("::[UserController] 비회원 로그인 서비스를 실행합니다.");
+
+		return "main";
+	}
+
 	// 관리자 로그인 서비스
 	@RequestMapping("login")
 	public String login(@RequestParam("userId") String userId, HttpServletRequest request ) throws Exception{

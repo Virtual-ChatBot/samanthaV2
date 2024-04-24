@@ -42,7 +42,7 @@
 
 					<c:if test="${sessionScope.user.nickName ne 'BEEMIL'}">
 
-						<a href="../visit" class="logo">
+						<a href="../user/visit" class="logo">
 							<span class="symbol"><img src="../images/phantom/logo.svg" alt="" /></span><span class="title">BEEMIL</span>
 						</a>
 
@@ -69,7 +69,7 @@
 						</c:if>
 
 						<c:if test="${sessionScope.user.nickName ne 'BEEMIL'}">
-							<a href="../visit">메인으로</a>
+							<a href="../user/visit">메인으로</a>
 						</c:if>
 					</li>
 

@@ -21,7 +21,6 @@ public class WebConfig implements WebMvcConfigurer {
 				.addPathPatterns("/**") // 모든 request URL 진입 거부
 				.excludePathPatterns(	// 제외 대상
 						"/"
-						, "/visit"
 						, "/intro"
 						, "/css/**"
 						, "/fonts/**"
@@ -29,7 +28,9 @@ public class WebConfig implements WebMvcConfigurer {
 						, "/media/**"
 						, "/js/**"
 						, "/bot/**"
-						, "/user/logout/**"
-						, "/user/json/**");
+						, "/user/visit"
+						, "/user/login"
+						, "/user/logout"
+						, "/user/json/loginCk");
 	}
 }
