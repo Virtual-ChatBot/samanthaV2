@@ -39,7 +39,7 @@ BUILD_PATH_PROD2=$(ls -tr ${REPOSITORY}/prod2/*.war | tail -1)
 WAR_NAME_PROD2=$(basename $BUILD_PATH_PROD2)
 echo "> build file for prod2: $WAR_NAME_PROD2"
 
-# (1.2)
+# (2.2)
 echo "> copy build file for prod2"
 DEPLOY_PATH_PROD2=${REPOSITORY}/prod2/
 if [ ! -d $DEPLOY_PATH_PROD2 ]; then
@@ -55,7 +55,7 @@ APPLICATION_WAR_PROD2=$DEPLOY_PATH_PROD2$APPLICATION_WAR_NAME_PROD2
 echo "> create link for prod2"
 ln -Tfs $CP_WAR_PATH_PROD2 $APPLICATION_WAR_PROD2
 
-# (1.3)
+# (2.3)
 echo "> Check application PID for prod2."
 CURRENT_PID_PROD2=$(pgrep -f -n $APPLICATION_WAR_NAME_PROD2)
 echo "$CURRENT_PID_PROD2"
