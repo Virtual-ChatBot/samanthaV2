@@ -35,6 +35,7 @@ else
     sleep 10
 fi
 
+sleep 10
 
 # Prod2 작업
 # (2.1)
