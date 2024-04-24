@@ -30,7 +30,7 @@ echo "$CURRENT_PID_PROD1"
 if [ -z $CURRENT_PID_PROD1 ]; then
     echo "> Restarting Docker container for prod1"
     echo "Qkrdydclf12" | sudo -S docker restart prod1
-    sleep 10
+    sleep 20
 fi
 
 # Prod2 작업
