@@ -1,6 +1,5 @@
 package site.beemil.samanthaV2.controller.bot;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -22,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Component
+@CrossOrigin
 @RestController
 @RequestMapping("/bot/*")
 public class BotRestController {
@@ -30,11 +30,17 @@ public class BotRestController {
     private final Properties config = new Properties();
 
     ///Constructor
-    public BotRestController(@Value("classpath:application-prod.yml") Resource configFile) {
+    public BotRestController(@Value("classpath:application-${spring.profiles.active}.properties") Resource configFile) {
         try {
-            config.load(configFile.getInputStream());
+            if (configFile.exists()) {
+                config.load(configFile.getInputStream());
+                System.out.println("application-" + System.getProperty("spring.profiles.active") + ".properties 파일이 로드되었습니다.");
+
+            } else {
+                System.err.println("application-" + System.getProperty("spring.profiles.active") + ".properties 파일이 존재하지 않습니다.");
+            }
         } catch (IOException e) {
-            logger.error("Failed to load API configuration properties", e);
+            logger.error("application-" + System.getProperty("spring.profiles.active") + ".properties 파일을 불러 오는데 실패했습니다.", e);
         }
     }
 
@@ -74,21 +80,16 @@ public class BotRestController {
             int responseCode = con.getResponseCode();
 
             if (responseCode == 200) {  // 정상 호출
-
                 br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
 
             } else {                    // 오류 발생
-
-                logger.error("API request failed with response code: " + responseCode);
-                br = new BufferedReader(new InputStreamReader(con.getErrorStream(), StandardCharsets.UTF_8));
-
-                // 예외 처리 후 바로 반환
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("API request failed with response code: " + responseCode);
+                JSONObject errorResponse = new JSONObject();
+                errorResponse.put("error", "API request failed with response code: " + responseCode);
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse.toString());
             }
             StringBuilder response = new StringBuilder();
 
             while ((decodedString = br.readLine()) != null) {
-
                 response.append(decodedString);
             }
             br.close();
@@ -98,7 +99,6 @@ public class BotRestController {
             chatbotMessage = new JSONObject(response.toString());
 
         } catch (Exception e) {
-
             logger.error("Failed to perform chatbot request", e);
 
             // 예외 처리 후 바로 반환
@@ -107,7 +107,6 @@ public class BotRestController {
         return ResponseEntity.ok(chatbotMessage.toString());
     }
     public static String makeSignature(String message, String secretKey) {
-
         try {
             byte[] secretKeyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
 
@@ -119,7 +118,6 @@ public class BotRestController {
             return Base64.getEncoder().encodeToString(rawHmac);
 
         } catch (Exception e) {
-
             throw new RuntimeException("Failed to generate signature", e);
         }
     }
@@ -135,7 +133,7 @@ public class BotRestController {
             long timestamp = new Date().getTime();
 
             System.out.println("::");
-            logger.info("대화 시간: " + timestamp);
+            logger.info("대화 시간: {}", timestamp);
 
             obj.put("version", "v2");
             obj.put("userId", userId);
@@ -170,8 +168,9 @@ public class BotRestController {
     }
 
     // NAVER Cloud SpeechToText
+    @CrossOrigin
     @RequestMapping("stt")
-    public StringBuffer speechToText(@RequestPart("audio")MultipartFile audioFile) throws Exception {
+    public StringBuffer speechToText(@RequestPart("audio") MultipartFile audioFile) throws Exception {
         // 최종 결과값 리턴 시 사용할 인스턴스 선언
         StringBuffer response = new StringBuffer();
 
@@ -228,7 +227,7 @@ public class BotRestController {
 
             // 음성변환 텍스트 결과 출력
             System.out.println("::");
-            logger.info("음성 변환 결과: " + response);
+            logger.info("음성 변환 결과: {}", response);
 
         }	catch (Exception e) {
             logger.error("Failed to perform speech-to-text conversion", e);
@@ -237,6 +236,7 @@ public class BotRestController {
     }
 
     // 페이지 내비게이션 서비스
+    @CrossOrigin
     @RequestMapping("navi")
     public ResponseEntity<Map<String, String[]>> pageNavigation(@RequestBody(required = false) Map<String, String[]> data) throws Exception {
         if (data != null && data.containsKey("url")) {
@@ -250,86 +250,86 @@ public class BotRestController {
         return ResponseEntity.badRequest().build();
     }
 
-// NAVER Cloud TextToSpeech(요금 이슈로 인해 사용 안 함)
-//    @RequestMapping("tts")
-//    public static ResponseEntity<byte[]> textToSpeech(@RequestBody String tts) throws Exception {
-//
-//        String apiUrl = config.getProperty("api.tts.url");
-//        String clientId = config.getProperty("api.tts.client.id");
-//        String clientSecret = config.getProperty("api.tts.client.secret");
-//
-//        // 챗봇 응답 텍스트 Request
-//        String text = URLEncoder.encode(tts, "UTF-8");
-//        String postParams = "speaker=ngoeun&volume=0&speed=0&pitch=0&format=mp3&text=" + text;
-//
-//        try {
-//            HttpURLConnection con = (HttpURLConnection) new URL(apiUrl).openConnection();
-//
-//            con.setDoOutput(true);
-//            con.setRequestMethod("POST");
-//            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-//            con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
-//            con.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
-//
-//            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-//
-//            wr.writeBytes(postParams);
-//            wr.flush();
-//            wr.close();
-//
-//            int responseCode = con.getResponseCode();
-//
-//            BufferedReader br;
-//            String date = Long.valueOf(new Date().getTime()).toString();
-//
-//            if(responseCode==200) { // 정상 호출
-//
-//                InputStream is = con.getInputStream();
-//
-//                int read = 0;
-//                byte[] bytes = new byte[1024];
-//
-//                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//
-//                while ((read =is.read(bytes)) != -1) {
-//
-//                    bos.write(bytes, 0, read);
-//                }
-//                is.close();
-//
-//                byte[] byteData = bos.toByteArray();
-//                HttpHeaders headers = new HttpHeaders();
-//
-//                headers.setContentType(MediaType.parseMediaType("audio/mpeg"));
-//                headers.setContentLength(byteData.length);
-//                headers.setContentDispositionFormData("attachment", date + ".mp3");
-//
-//                ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(byteData, headers, HttpStatus.OK);
-//
-//                System.out.println("::");
-//                System.out.println("챗봇음성: " + response);
-//
-//                return response;
-//
-//            } else {  // 오류 발생
-//
-//                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-//                String inputLine;
-//                StringBuilder response = new StringBuilder();
-//
-//                while ((inputLine = br.readLine()) != null) {
-//
-//                    response.append(inputLine);
-//                }
-//
-//                br.close();
-//                System.out.println(response.toString());
-//            }
-//
-//        } catch (Exception e) {
-//
-//            System.out.println(e);
-//        }
-//        return null;
-//    }
+/* NAVER Cloud TextToSpeech(요금 이슈로 인해 사용 안 함)
+    @RequestMapping("tts")
+    public static ResponseEntity<byte[]> textToSpeech(@RequestBody String tts) throws Exception {
+
+    String apiUrl = config.getProperty("api.tts.url");
+    String clientId = config.getProperty("api.tts.client.id");
+    String clientSecret = config.getProperty("api.tts.client.secret");
+
+    // 챗봇 응답 텍스트 Request
+    String text = URLEncoder.encode(tts, "UTF-8");
+    String postParams = "speaker=ngoeun&volume=0&speed=0&pitch=0&format=mp3&text=" + text;
+
+    try {
+        HttpURLConnection con = (HttpURLConnection) new URL(apiUrl).openConnection();
+
+        con.setDoOutput(true);
+        con.setRequestMethod("POST");
+        con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
+        con.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
+
+        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+
+        wr.writeBytes(postParams);
+        wr.flush();
+        wr.close();
+
+        int responseCode = con.getResponseCode();
+
+        BufferedReader br;
+        String date = Long.valueOf(new Date().getTime()).toString();
+
+        if(responseCode==200) { // 정상 호출
+
+            InputStream is = con.getInputStream();
+
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+            while ((read =is.read(bytes)) != -1) {
+
+                bos.write(bytes, 0, read);
+            }
+            is.close();
+
+            byte[] byteData = bos.toByteArray();
+            HttpHeaders headers = new HttpHeaders();
+
+            headers.setContentType(MediaType.parseMediaType("audio/mpeg"));
+            headers.setContentLength(byteData.length);
+            headers.setContentDispositionFormData("attachment", date + ".mp3");
+
+            ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(byteData, headers, HttpStatus.OK);
+
+            System.out.println("::");
+            System.out.println("챗봇음성: " + response);
+
+            return response;
+
+            } else {  // 오류 발생
+
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = br.readLine()) != null) {
+
+                    response.append(inputLine);
+                }
+
+                br.close();
+                System.out.println(response.toString());
+            }
+
+        } catch (Exception e) {
+
+            System.out.println(e);
+        }
+        return null;
+    }*/
 }

@@ -14,7 +14,6 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-
 		registry.addInterceptor(loginCheckInterceptor)
 				.addPathPatterns("/**") // 모든 request URL 진입 거부
 				.excludePathPatterns(	// 제외 대상
@@ -25,10 +24,10 @@ public class WebConfig implements WebMvcConfigurer {
 						, "/images/**"
 						, "/media/**"
 						, "/js/**"
-						, "/bot/chat"
 						, "/user/visit"
 						, "/user/login"
 						, "/user/logout"
-						, "/user/json/loginCk");
+						, "/user/json/loginCk"
+						, "/bot/**");
 	}
 }
