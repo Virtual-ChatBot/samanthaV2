@@ -32,6 +32,8 @@ if [ -z $CURRENT_PID_PROD1 ]; then
     echo "Qkrdydclf12" | sudo -S docker restart prod1
 fi
 
+sleep 10
+
 # Prod2 작업
 # (2.1)
 BUILD_PATH_PROD2=$(ls -tr ${REPOSITORY}/prod2/*.war | tail -1)
