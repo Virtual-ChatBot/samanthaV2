@@ -27,6 +27,11 @@ echo "> Check application PID for prod1."
 CURRENT_PID_PROD1=$(pgrep -f -n $APPLICATION_WAR_NAME_PROD1)
 echo "$CURRENT_PID_PROD1"
 
+if [ -z $CURRENT_PID_PROD1 ]; then
+    echo "> Restarting Docker container for prod1"
+    echo "Qkrdydclf12" | sudo -S docker restart prod1
+    sleep 10
+fi
 
 # Prod2 작업
 # (2.1)
@@ -54,3 +59,8 @@ ln -Tfs $CP_WAR_PATH_PROD2 $APPLICATION_WAR_PROD2
 echo "> Check application PID for prod2."
 CURRENT_PID_PROD2=$(pgrep -f -n $APPLICATION_WAR_NAME_PROD2)
 echo "$CURRENT_PID_PROD2"
+
+if [ -z $CURRENT_PID_PROD2 ]; then
+    echo "> Restarting Docker container for prod2"
+    echo "Qkrdydclf12" | sudo -S docker restart prod2
+fi
