@@ -8,7 +8,6 @@ public class WebController {
 
     @RequestMapping("/")
     public String index() {
-
         System.out.println("::");
         System.out.println("::[WebController] 비밀연구소에 오신 걸 환영합니다.");
 
@@ -17,7 +16,6 @@ public class WebController {
 
     @RequestMapping("/intro")
     public String intro() {
-
         System.out.println("::");
         System.out.println("::[WebController] 소개 서비스를 실행합니다.");
 

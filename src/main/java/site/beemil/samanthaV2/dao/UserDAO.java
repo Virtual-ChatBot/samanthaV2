@@ -7,5 +7,4 @@ import site.beemil.samanthaV2.vo.UserVO;
 public interface UserDAO {
 	// 로그인 서비스
 	public UserVO login(String userId) throws Exception;
-
 }

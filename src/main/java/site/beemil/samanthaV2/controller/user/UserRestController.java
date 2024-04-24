@@ -11,7 +11,6 @@ import site.beemil.samanthaV2.vo.UserVO;
 @RestController
 @RequestMapping("/user/*")
 public class UserRestController {
-
 	///Field
 	private final UserService userService;
 
@@ -26,30 +25,25 @@ public class UserRestController {
 	//계정 유무 확인 서비스
 	@RequestMapping("json/loginCk")
 	public String loginCk(String userId, String password, HttpServletRequest request) throws Exception {
-
 		System.out.println("::");
 		System.out.println("::[UserRestController] 계정 유무 확인 서비스를 시작합니다.");
 
 		String result="";
-
 		UserVO user = userService.login(userId);
 
 		if(user == null ) {
-
 			result="NOID";
 
 			System.out.println("::");
 			System.out.println("::[UserRestController] 아이디가 없습니다. 접속을 거부합니다.");
 
 		} else {
-
 			result="YESID";
 
 			System.out.println("::");
 			System.out.println("::[UserRestController] 아이디 확인이 완료되었습니다. 패스워드 확인을 시작합니다.");
 
 			if(user.getPassword().equals(password)){
-
 				result="YESPWD";
 
 				//1) 세션 생성하기
@@ -65,7 +59,6 @@ public class UserRestController {
 				System.out.println("::[UserRestController] 패스워드 확인이 완료되었습니다. 접속을 허가합니다.");
 
 			} else {
-
 				result="NOPWD";
 
 				System.out.println("::");

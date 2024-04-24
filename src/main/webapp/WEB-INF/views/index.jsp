@@ -122,7 +122,6 @@
     	<script type="text/javascript">
 
 		$( function() {
-
 			//============= 첫 페이지 아이디 text에 포커스 Event 시작 =============
 			$('#userId').focus();
 
@@ -145,7 +144,6 @@
 
 			//============= 버튼 클릭 Event 시작 =============
 			$(".btn.btn-dark").on("click" , function() {
-
 				getProdNo();
 
 			});
@@ -153,30 +151,25 @@
 
 				//============= 제이쿼리 쿠키 Event 시작 =============
 			$(".btn.btn-dark").on("click" , function() {		// 로그인 버튼을 클릭 했을때
-
 				if($('#rememberId').is(':checked')) {			// 아이디 저장에 체크가 되어 있을때
-
 					$.cookie('rememberId', $('#userId').val(), {expires: 1}); // 아이디를 쿠키에 저장한다.
 
 				} else {
-
 					$.removeCookie('rememberId', {path:'/'});	// 아이디 저장에 체크가 안되어 있을 시 쿠키값을 삭제한다.
 				}
 			});
 
 			$("#rememberId").on("click" , function() {			// 체크를 클릭 했을때
-
 				if($('#rememberId').is(':checked')) {			// 아이디 저장에 체크가 될 때
-
 					$.cookie('rememberId', $('#userId').val() , {expires: 1}); 		// 아이디를 쿠키에 저장한다.
 
 				} else{
-
 					$.removeCookie('rememberId', {path:'/'});	// 아이디 저장에 체크가 해제될 때 쿠키값을 삭제한다.
 				}
 			});
 		//============= 아이디 쿠키 저장  Event 종료 =============
 		});//끝
+
 		//============= 로그인 EVENT 시작 =============
 		function getProdNo() {
 
@@ -184,7 +177,6 @@
 			let id=$("#userId").val();
 
 			if(id.trim()==="") {
-
 				alert("아이디를 입력해주세요");
 				$('#userId').focus();
 				return;
@@ -194,14 +186,12 @@
 			let pwd=$("#password").val();
 
 			if(pwd.trim()==="") {
-
 				alert("패스워드를 입력해주세요");
 				$('#password').focus();
 				return;
 			}
 
 			$.ajax({
-
 					url:'/user/json/loginCk',
 					data:{"userId":id,"password":pwd},
 					success:function(result) {
@@ -209,7 +199,6 @@
 					let res=result.trim();
 
 					if(res==='NOID') {
-
 						alert("계정이 존재하지 않습니다");
 
 						$('#userId').val("");
@@ -219,14 +208,12 @@
 					} else {
 
 						if(res==='NOPWD') {
-
 							alert("패스워드를 잘못 입력하였습니다");
 							$('#password').val("");
 							$('#password').focus();
 
 						} else if(res==='YESPWD') {
-
-							self.location="/user/login?userId="+id;
+							window.location.href = "/user/login?userId=" + id;
 						}
 					}
 				}

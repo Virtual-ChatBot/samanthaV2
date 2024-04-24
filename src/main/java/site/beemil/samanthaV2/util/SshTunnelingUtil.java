@@ -18,7 +18,6 @@ import java.util.Properties;
 @Validated
 @Setter
 public class SshTunnelingUtil {
-
     private String host;
     private String user;
     private int sshPort;
@@ -29,14 +28,12 @@ public class SshTunnelingUtil {
 
     @PreDestroy
     public void closeSSH() {
-
         if (session != null && session.isConnected()) {
             session.disconnect();
         }
     }
 
     public Integer buildSshConnection() {
-
         Integer forwardedPort = null;
 
         try {

@@ -6,11 +6,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
 	private final LoginCheckInterceptor loginCheckInterceptor;
 
 	public WebConfig(LoginCheckInterceptor loginCheckInterceptor) {
-
 		this.loginCheckInterceptor = loginCheckInterceptor;
 	}
 
@@ -27,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
 						, "/images/**"
 						, "/media/**"
 						, "/js/**"
-						, "/bot/**"
+						, "/bot/chat"
 						, "/user/visit"
 						, "/user/login"
 						, "/user/logout"

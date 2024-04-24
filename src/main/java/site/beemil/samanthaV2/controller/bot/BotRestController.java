@@ -25,13 +25,12 @@ import java.util.*;
 @RestController
 @RequestMapping("/bot/*")
 public class BotRestController {
-
     ///Field
     private static final Logger logger = LoggerFactory.getLogger(BotRestController.class);
     private final Properties config = new Properties();
 
     ///Constructor
-    public BotRestController(@Value("classpath:application.yml") Resource configFile) {
+    public BotRestController(@Value("classpath:application-prod.yml") Resource configFile) {
         try {
             config.load(configFile.getInputStream());
         } catch (IOException e) {
@@ -40,10 +39,8 @@ public class BotRestController {
     }
 
     // NAVER Cloud ChatBot
-    @CrossOrigin
     @RequestMapping("chat")
     public ResponseEntity<String> chatBot(@RequestBody String text) {
-
         // 최종 결과값 리턴시 사용할 인스턴스 선언
         JSONObject chatbotMessage;
 
@@ -127,7 +124,6 @@ public class BotRestController {
         }
     }
     public static String getReqMessage(String text) {
-
         /// 최종 결과값 리턴시 사용할 변수 선언
         String requestBody = "";
 
@@ -160,27 +156,22 @@ public class BotRestController {
             obj.put("bubbles", bubbles_array);
 
             if (Objects.equals(text, "동영상 보여줘")) {
-
                 obj.put("event", "open");
 
             } else {
-
                 obj.put("event", "send");
             }
             requestBody = obj.toString();
 
         } catch (Exception e) {
-
             logger.error("Failed to create the request message", e);
         }
         return requestBody;
     }
 
     // NAVER Cloud SpeechToText
-    @CrossOrigin
     @RequestMapping("stt")
     public StringBuffer speechToText(@RequestPart("audio")MultipartFile audioFile) throws Exception {
-
         // 최종 결과값 리턴 시 사용할 인스턴스 선언
         StringBuffer response = new StringBuffer();
 
@@ -223,16 +214,14 @@ public class BotRestController {
             int responseCode = con.getResponseCode();
 
             if(responseCode == 200) {   // 정상 호출
-
                 br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
 
-            }	else {					// 오류 발생
-
+            } else {					// 오류 발생
                 System.out.println("error!!!!!!! responseCode= " + responseCode);
                 br = new BufferedReader(new InputStreamReader(con.getErrorStream(), StandardCharsets.UTF_8));
             }
-            while ((inputLine = br.readLine()) != null) {
 
+            while ((inputLine = br.readLine()) != null) {
                 response.append(inputLine);
             }
             br.close();
@@ -242,23 +231,18 @@ public class BotRestController {
             logger.info("음성 변환 결과: " + response);
 
         }	catch (Exception e) {
-
             logger.error("Failed to perform speech-to-text conversion", e);
         }
         return response;
     }
 
     // 페이지 내비게이션 서비스
-    @CrossOrigin
     @RequestMapping("navi")
-    public ResponseEntity<Map<String, String[]>> pageNavigation(@RequestBody(required = false) Map<String, String[]> data, HttpServletRequest request) throws Exception {
-
+    public ResponseEntity<Map<String, String[]>> pageNavigation(@RequestBody(required = false) Map<String, String[]> data) throws Exception {
         if (data != null && data.containsKey("url")) {
-
             String[] urls = data.get("url");
 
             if (urls != null && urls.length > 0) {
-
                 String[] responseData = new String[]{urls[0]};
                 return ResponseEntity.ok().body(Collections.singletonMap("url", responseData));
             }
@@ -266,9 +250,7 @@ public class BotRestController {
         return ResponseEntity.badRequest().build();
     }
 
-// NAVER Cloud TextToSpeech(요금 이슈로 현재 사용 안 함)
-//
-//    @CrossOrigin
+// NAVER Cloud TextToSpeech(요금 이슈로 인해 사용 안 함)
 //    @RequestMapping("tts")
 //    public static ResponseEntity<byte[]> textToSpeech(@RequestBody String tts) throws Exception {
 //

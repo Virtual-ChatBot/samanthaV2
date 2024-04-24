@@ -8,7 +8,6 @@ import site.beemil.samanthaV2.vo.UserVO;
 
 @Service
 public class UserServiceImpl implements UserService {
-
     ///Field
     private final UserDAO userDao;
 
