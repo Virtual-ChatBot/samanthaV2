@@ -3,6 +3,7 @@
 * Voice recognition is possible through the microphone.
 * Samantha answers by text and voice.
 * Samantha moves the look.
+* This is linked to samantha AI.
 
 ## Specifications
 * Project Type: Gradle
