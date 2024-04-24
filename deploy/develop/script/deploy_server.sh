@@ -60,7 +60,7 @@ CURRENT_PID_PROD2=$(pgrep -f -n $APPLICATION_WAR_NAME_PROD2)
 echo "$CURRENT_PID_PROD2"
 
 if [ -z $CURRENT_PID_PROD2 ]; then
-    sleep 15
+    sleep 5
     echo "> Restarting Docker container for prod2"
     echo "Qkrdydclf12" | sudo -S docker restart prod2
 fi
