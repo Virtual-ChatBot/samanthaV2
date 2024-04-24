@@ -28,14 +28,10 @@ CURRENT_PID_PROD1=$(pgrep -f -n $APPLICATION_WAR_NAME_PROD1)
 echo "$CURRENT_PID_PROD1"
 
 if [ -z $CURRENT_PID_PROD1 ]; then
-    echo "> No running applications found for prod1."
-else
     echo "> Restarting Docker container for prod1"
     docker restart prod1
     sleep 10
 fi
-
-sleep 10
 
 # Prod2 작업
 # (2.1)
@@ -65,8 +61,6 @@ CURRENT_PID_PROD2=$(pgrep -f -n $APPLICATION_WAR_NAME_PROD2)
 echo "$CURRENT_PID_PROD2"
 
 if [ -z $CURRENT_PID_PROD2 ]; then
-    echo "> No running applications found for prod2."
-else
     echo "> Restarting Docker container for prod2"
     docker restart prod2
     sleep 10
