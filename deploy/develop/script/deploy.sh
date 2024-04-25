@@ -10,6 +10,7 @@ SERVER_IP=$2
 PROD1_PORT=$3
 PROD2_PORT=$4
 SERVER_LIST=$5
+SERVER_PORT=$6
 
 #스크립트 내에서 변수 사용
 echo "Docker Password: $DOCKER_PASSWORD"
@@ -17,6 +18,7 @@ echo "Server IP: $SERVER_IP"
 echo "Prod1 Port: $PROD1_PORT"
 echo "Prod2 Port: $PROD2_PORT"
 echo "Server Config: $SERVER_LIST"
+echo "Server Port: $SERVER_PORT"
 
 #===================================생존 서버 확인=====================================
 echo "> 5초 후 Health check 시작"

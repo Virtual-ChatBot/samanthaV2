@@ -36,10 +36,10 @@ pipeline {
 
                 script {
                 	// (4)
-                    SERVER_LIST.tokenize(',').each { server ->
-                        SERVER_PORT.tokenize(',').each { port ->
-                            echo "SERVER_LIST: ${server}, SERVER_PORT: ${port}"
-                            ssh_publisher(server, port)
+                    SERVER_LIST.tokenize(',').each {
+                        SERVER_PORT.tokenize(',').each {
+                            echo "SERVER_LIST: ${it}"
+                            ssh_publisher("${it}")
                         }
                     }
                 }
@@ -49,7 +49,7 @@ pipeline {
 }
 
 // (5)
-def ssh_publisher(SERVER_LIST, SERVER_PORT) {
+def ssh_publisher(SERVER_CONFIG) {
     sshPublisher(
         publishers:[
             sshPublisherDesc(
