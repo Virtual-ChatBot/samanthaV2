@@ -20,7 +20,7 @@ def ssh_publisher(SERVER_CONFIG) {
                         removePrefix: "build/libs",
                         remoteDirectory: "/",
                         // Absolute path.
-                        execCommand: "sh /home/samantha/tomcat_data/prod1/script/deploy_server.sh"
+                        execCommand: "sh /home/samantha/tomcat_data/prod1/script/deploy_server.sh> /dev/null 2>&1 ${docker.password} ${server.ip} ${prod1.port} ${prod2.port}"
                     ),
                     // (5.3) Health check
                     sshTransfer(
