@@ -1,31 +1,3 @@
-// (5)
-def ssh_publisher(SERVER_CONFIG) {
-    sshPublisher(
-        publishers:[
-            sshPublisherDesc(
-                configName: "${SERVER_CONFIG}",
-                verbose: true,
-                transfers: [
-                    // (5.1) Copy script files
-                    sshTransfer(
-                        sourceFiles: "deploy/develop/script/*.sh",
-                        removePrefix: "deploy/develop/script",
-                        remoteDirectory: "script"
-                    ),
-                    // (5.2) Copy build files
-                    sshTransfer(
-                        sourceFiles: "build/libs/*.war",
-                        removePrefix: "build/libs",
-                        remoteDirectory: "/",
-                        // Absolute path.
-                        execCommand: "sh /home/samantha/tomcat_data/${SERVER_CONFIG}/script/deploy.sh ${DOCKER_PASSWORD} ${SERVER_IP} ${PROD1_PORT} ${PROD2_PORT}"
-                    )
-                ]
-            )
-        ]
-    )
-}
-
 // (1)
 pipeline {
     environment {
@@ -71,4 +43,32 @@ pipeline {
             }
         }
     }
+}
+
+// (5)
+def ssh_publisher(SERVER_LIST) {
+    sshPublisher(
+        publishers:[
+            sshPublisherDesc(
+                configName: "${SERVER_CONFIG}",
+                verbose: true,
+                transfers: [
+                    // (5.1) Copy script files
+                    sshTransfer(
+                        sourceFiles: "deploy/develop/script/*.sh",
+                        removePrefix: "deploy/develop/script",
+                        remoteDirectory: "script"
+                    ),
+                    // (5.2) Copy build files
+                    sshTransfer(
+                        sourceFiles: "build/libs/*.war",
+                        removePrefix: "build/libs",
+                        remoteDirectory: "/",
+                        // Absolute path.
+                        execCommand: "sh /home/samantha/tomcat_data/${SERVER_LIST}/script/deploy.sh ${DOCKER_PASSWORD} ${SERVER_IP} ${PROD1_PORT} ${PROD2_PORT} ${SERVER_LIST}"
+                    )
+                ]
+            )
+        ]
+    )
 }
