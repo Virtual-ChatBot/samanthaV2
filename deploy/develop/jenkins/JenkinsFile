@@ -2,7 +2,7 @@
 pipeline {
     environment {
         // (2) Registered in Jenkins
-        SERVER_LIST = "prod1,prod2",
+        SERVER_LIST = "prod1,prod2"
         SERVER_PORT = "8080,8081"
     }
 
@@ -47,7 +47,7 @@ pipeline {
 }
 
 // (5)
-def ssh_publisher(SERVER_CONFIG) {
+def ssh_publisher(server) {
     sshPublisher(
         publishers:[
             sshPublisherDesc(
