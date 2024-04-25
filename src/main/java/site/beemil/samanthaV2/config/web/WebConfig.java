@@ -18,7 +18,6 @@ public class WebConfig implements WebMvcConfigurer {
 				.addPathPatterns("/**") // 모든 request URL 진입 거부
 				.excludePathPatterns(	// 제외 대상
 						"/"
-						, "/status"
 						, "/intro"
 						, "/css/**"
 						, "/fonts/**"
