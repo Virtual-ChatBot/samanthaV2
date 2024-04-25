@@ -1,6 +1,6 @@
 HOME=/home/samantha/tomcat_data
 WAR_NAME=ROOT.war
-WAIT_TIME=1
+WAIT_TIME=10
 
 # Prod1 작업
 # (1.1)
