@@ -29,8 +29,8 @@ echo "$CURRENT_PID_PROD1"
 
 if [ -z $CURRENT_PID_PROD1 ]; then
     echo "> Restarting Docker container for prod1"
-    echo "Qkrdydclf12" | sudo -S docker restart prod1
-    sleep 10
+    echo "Qkrdydclf12" | sudo -S docker restart nginx
+    sleep 1
 fi
 
 # Prod2 작업
@@ -61,7 +61,7 @@ CURRENT_PID_PROD2=$(pgrep -f -n $APPLICATION_WAR_NAME_PROD2)
 echo "$CURRENT_PID_PROD2"
 
 if [ -z $CURRENT_PID_PROD2 ]; then
-    sleep 10
+    sleep 1
     echo "> Restarting Docker container for prod2"
-    echo "Qkrdydclf12" | sudo -S docker restart prod2
+    echo "Qkrdydclf12" | sudo -S docker restart nginx
 fi
