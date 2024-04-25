@@ -1,7 +1,7 @@
 #deploy.sh
 HOME=/home/samantha/tomcat_data
 WAR_NAME=ROOT.war
-WAIT_TIME=3
+WAIT_TIME=5
 echo "> build 파일명: $WAR_NAME"
 
 #Jenkins 환경 변수에서 전달한 값
@@ -16,7 +16,7 @@ echo "Server IP: $SERVER_IP"
 echo "Prod1 Port: $PROD1_PORT"
 echo "Prod2 Port: $PROD2_PORT"
 
-#=======================================배포===========================================
+#=======================================배포1===========================================
 # Prod1 작업
 # (1.1)
 BUILD_PATH_PROD1=$(ls -tr $HOME/prod1/*.war | tail -1)
@@ -45,7 +45,7 @@ do
     echo "> 서버 health 체크 실패"
     exit 1
   fi
-  echo "> 실패 3초후 재시도"
+  echo "> 실패 5초후 재시도"
   sleep $WAIT_TIME
 done
 
@@ -95,29 +95,16 @@ then
         kill -9 $PID
     done
 fi
-#=======================================배포===========================================
+#=======================================배포2===========================================
 echo "> 배포"
 echo "> 파일명" $HOME/$WAR_NAME
 echo $DOCKER_PASSWORD | sudo -S docker restart prod1
 sleep $WAIT_TIME
 
-# Prod2 작업
-# (2.1)
-BUILD_PATH_PROD2=$(ls -tr $HOME/prod2/*.war | tail -1)
-WAR_PATH_PROD2=$(basename $BUILD_PATH_PROD2)
-echo "> build file for prod2: $WAR_PATH_PROD2"
-
-# (2.2)
-echo "> copy build file for prod2"
-DEPLOY_PATH_PROD2=$HOME/prod2
-if [ ! -d $DEPLOY_PATH_PROD2 ]; then
-  mkdir $DEPLOY_PATH_PROD2
-fi
-cp $BUILD_PATH_PROD2 $DEPLOY_PATH_PROD2
-
-echo "> 10초 후 Health check 시작"
-echo "> curl -s http://$SERVER_IP:$PROD2_PORT/actuator/health"
 #==================================현재 서버 확인======================================
+echo "> 5초 후 Health check 시작"
+echo "> curl -s http://$SERVER_IP:$PROD2_PORT/actuator/health"
+
 for retry_count in {1..3}; do
   response=$(sudo curl -s http://$MY_IP:$DEPLOYED_PORT/actuator/health)
   up_count=$(echo $response | grep 'UP' | wc -l)
@@ -186,8 +173,21 @@ then
     done
 fi
 #=======================================배포===========================================
+# Prod2 작업
+# (2.1)
+BUILD_PATH_PROD2=$(ls -tr $HOME/prod2/*.war | tail -1)
+WAR_PATH_PROD2=$(basename $BUILD_PATH_PROD2)
+echo "> build file for prod2: $WAR_PATH_PROD2"
+
+# (2.2)
+echo "> copy build file for prod2"
+DEPLOY_PATH_PROD2=$HOME/prod2
+if [ ! -d $DEPLOY_PATH_PROD2 ]; then
+  mkdir $DEPLOY_PATH_PROD2
+fi
+cp $BUILD_PATH_PROD2 $DEPLOY_PATH_PROD2
+
 echo "> 배포"
 echo "> 파일명" $HOME/$WAR_NAME
 echo $DOCKER_PASSWORD | sudo -S docker restart prod2
 sleep $WAIT_TIME
-#===============================현재 서버 Health check=================================
