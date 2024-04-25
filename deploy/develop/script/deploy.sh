@@ -20,18 +20,6 @@ echo "Server Config: $SERVER_LIST"
 
 #=======================================배포1===========================================
 # Prod1 작업
-# (1.1)
-BUILD_PATH_PROD1=$(ls -tr $HOME/$SERVER_LIST/*.war | tail -1)
-WAR_PATH_PROD1=$(basename $BUILD_PATH_PROD1)
-echo "> build file for prod1: $WAR_PATH_PROD1"
-
-# (1.2)
-echo "> copy build file for prod1"
-DEPLOY_PATH_PROD1=$HOME/prod1
-if [ ! -d $DEPLOY_PATH_PROD1 ]; then
-  mkdir $DEPLOY_PATH_PROD1
-fi
-cp $BUILD_PATH_PROD1 $DEPLOY_PATH_PROD1
 
 echo "> 배포"
 echo "> 파일명" $HOME/$WAR_NAME
