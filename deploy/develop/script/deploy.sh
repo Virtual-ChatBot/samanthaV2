@@ -33,7 +33,7 @@ cp $BUILD_PATH_PROD1 $DEPLOY_PATH_PROD1
 echo "> 서버 체크 시작"
 for retry_count in {1..10};
 do
-  response=$(echo $DOCKER_PASSWORD | sudo curl -s http://$SERVER_IP:$PROD1_PORT/actuator/health)
+  response=$(echo $DOCKER_PASSWORD | sudo curl -S http://$SERVER_IP:$PROD1_PORT/actuator/health)
   up_count=$(echo $response | grep 'UP' | wc -l)
   echo "> $retry_count : $response  : $up_count"
   if [ $up_count -ge 1 ]; then
