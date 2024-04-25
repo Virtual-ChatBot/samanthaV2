@@ -1,8 +1,6 @@
 // (5)
 def ssh_publisher(SERVER_CONFIG) {
     sshPublisher(
-        continueOnError: false,
-        failOnError: true,
         publishers:[
             sshPublisherDesc(
                 configName: "${SERVER_CONFIG}",
@@ -38,6 +36,10 @@ pipeline {
     environment {
         // (2) Registered in Jenkins
         SERVER_LIST = "prod1,prod2"
+        DOCKER_PASSWORD = "docker.password"
+        SERVER_IP = "server.ip"
+        PROD1_PORT = "prod1.port"
+        PROD2_PORT = "prod2.port"
     }
 
     agent any

@@ -2,6 +2,18 @@ HOME=/home/samantha/tomcat_data
 WAR_NAME=ROOT.war
 WAIT_TIME=10
 
+# Jenkins 환경 변수에서 전달한 값들
+DOCKER_PASSWORD=$1
+SERVER_IP=$2
+PROD1_PORT=$3
+PROD2_PORT=$4
+
+# 스크립트 내에서 변수 사용
+echo "Docker Password: $DOCKER_PASSWORD"
+echo "Server IP: $SERVER_IP"
+echo "Prod1 Port: $PROD1_PORT"
+echo "Prod2 Port: $PROD2_PORT"
+
 # Prod1 작업
 # (1.1)
 BUILD_PATH_PROD1=$(ls -tr ${HOME}/prod1/*.war | tail -1)
@@ -30,7 +42,7 @@ echo "$CURRENT_PID_PROD1"
 
 if [ -z $CURRENT_PID_PROD1 ]; then
     echo "> Restarting Docker container for prod1"
-    echo "Qkrdydclf12" | sudo -S docker restart prod1
+    echo "$DOCKER_PASSWORD" | sudo -S docker restart prod1
     sleep $WAIT_TIME
 fi
 
@@ -63,5 +75,5 @@ echo "$CURRENT_PID_PROD2"
 if [ -z $CURRENT_PID_PROD2 ]; then
     sleep $WAIT_TIME
     echo "> Restarting Docker container for prod2"
-    echo "Qkrdydclf12" | sudo -S docker restart prod2
+    echo "$DOCKER_PASSWORD" | sudo -S docker restart prod2
 fi
