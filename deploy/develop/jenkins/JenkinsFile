@@ -40,7 +40,10 @@ pipeline {
                         echo "SERVER_LIST: ${it}"
                         ssh_publisher("${it}")
                     }
+                }
 
+                script {
+                    // (5)
                     SERVER_PORT.tokenize(',').each {
                         echo "SERVER_PORT: ${it}"
                         ssh_publisher("${it}")
