@@ -1,7 +1,7 @@
 #deploy.sh
 HOME=/home/samantha/tomcat_data
 WAR_NAME=ROOT.war
-WAIT_TIME=10
+WAIT_TIME=15
 echo "> build 파일명: $WAR_NAME"
 
 #Jenkins 환경 변수에서 전달한 값
@@ -102,3 +102,7 @@ if [ ! -d $DEPLOY_PATH_PROD1 ]; then
   mkdir $DEPLOY_PATH_PROD1
 fi
 cp $BUILD_PATH_PROD1 $DEPLOY_PATH_PROD1
+
+#echo "> 배포"
+#echo "> 파일명" $HOME/$WAR_NAME
+#echo $DOCKER_PASSWORD | sudo -S docker restart prod1
