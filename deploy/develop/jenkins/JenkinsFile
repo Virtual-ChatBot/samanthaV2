@@ -3,6 +3,7 @@ pipeline {
     environment {
         // (2) Registered in Jenkins
         SERVER_LIST = "prod1,prod2"
+        SERVER_PORT = "8080,8081"
     }
 
     agent any
@@ -36,7 +37,12 @@ pipeline {
                 script {
                 	// (4)
                     SERVER_LIST.tokenize(',').each {
-                        echo "SERVER: ${it}"
+                        echo "SERVER_LIST: ${it}"
+                        ssh_publisher("${it}")
+                    }
+
+                    SERVER_PORT.tokenize(',').each {
+                        echo "SERVER_PORT: ${it}"
                         ssh_publisher("${it}")
                     }
                 }
@@ -46,12 +52,11 @@ pipeline {
 }
 
 // (5)
-def ssh_publisher(SERVER_LIST) {
+def ssh_publisher(SERVER_LIST, SERVER_PORT) {
     sshPublisher(
         publishers:[
             sshPublisherDesc(
                 configName: "${SERVER_LIST}",
-                verbose: true,
                 transfers: [
                     // (5.1) Copy script files
                     sshTransfer(
@@ -65,7 +70,7 @@ def ssh_publisher(SERVER_LIST) {
                         removePrefix: "build/libs",
                         remoteDirectory: "/",
                         // Absolute path.
-                        execCommand: "sh /home/samantha/tomcat_data/${SERVER_LIST}/script/deploy.sh ${DOCKER_PASSWORD} ${SERVER_IP} ${PROD1_PORT} ${PROD2_PORT} ${SERVER_LIST}"
+                        execCommand: "sh /home/samantha/tomcat_data/${SERVER_LIST}/script/deploy.sh ${DOCKER_PASSWORD} ${SERVER_IP} ${PROD1_PORT} ${PROD2_PORT} ${SERVER_LIST} ${SERVER_PORT}"
                     )
                 ]
             )
