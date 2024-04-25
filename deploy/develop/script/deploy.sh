@@ -1,19 +1,37 @@
-#deploy_server.sh
-HOME=/home/samantha/tomcat_data
+#deploy.sh
+BASE_PATH=/home/samantha/tomcat_data
 WAR_NAME=ROOT.war
 WAIT_TIME=10
+echo "> build 파일명: $WAR_NAME"
 
-# Jenkins 환경 변수에서 전달한 값
+#Jenkins 환경 변수에서 전달한 값
 DOCKER_PASSWORD=$1
 SERVER_IP=$2
 PROD1_PORT=$3
 PROD2_PORT=$4
 
-# 스크립트 내에서 변수 사용
+#스크립트 내에서 변수 사용
 echo "Docker Password: $DOCKER_PASSWORD"
 echo "Server IP: $SERVER_IP"
 echo "Prod1 Port: $PROD1_PORT"
 echo "Prod2 Port: $PROD2_PORT"
+
+#private ip
+MY_IP=$(hostname -i)
+echo "내 아이피는 $MY_IP 입니다"
+
+loop=1
+limitLoop=30
+flag='false'
+
+
+if [ $MY_IP == $IP1 ]; then
+  OTHER_IP=$IP2
+elif [ $MY_IP == $IP2 ]; then
+  OTHER_IP=$IP1
+else
+  echo "> 일치하는 IP가 없습니다. "
+fi
 
 # Prod1 작업
 # (1.1)
