@@ -18,13 +18,13 @@ echo "Prod2 Port: $PROD2_PORT"
 
 # Prod1 작업
 # (1.1)
-BUILD_PATH_PROD1=$(ls -tr ${HOME}/prod1/*.war | tail -1)
+BUILD_PATH_PROD1=$(ls -tr $HOME/prod1/*.war | tail -1)
 WAR_PATH_PROD1=$(basename $BUILD_PATH_PROD1)
 echo "> build file for prod1: $WAR_PATH_PROD1"
 
 # (1.2)
 echo "> copy build file for prod1"
-DEPLOY_PATH_PROD1=${HOME}/prod1/
+DEPLOY_PATH_PROD1=$HOME/prod1
 if [ ! -d $DEPLOY_PATH_PROD1 ]; then
   mkdir $DEPLOY_PATH_PROD1
 fi
@@ -67,7 +67,7 @@ else
   done
   while [ $loop -le $limitLoop ]
   do
-      PID_LIST=(`ps -ef | grep  $JAR_NAME | grep -v 'grep' | awk '{ print $2 }'`)
+      PID_LIST=(`ps -ef | grep  $WAR_NAME | grep -v 'grep' | awk '{ print $2 }'`)
       if [ ${#PID_LIST[@]} = 0 ]
       then
           echo "> gracefully shutdown success "
@@ -95,22 +95,22 @@ then
     done
 fi
 #=======================================배포===========================================
-if [ -z $CURRENT_PID_PROD1 ]; then
-    echo "> Restarting Docker container for prod1"
-    echo $DOCKER_PASSWORD | sudo -S docker restart prod1
-    sleep $WAIT_TIME
-fi
+echo "> 배포"
+echo "> 파일명" $HOME/$WAR_NAME
+echo $DOCKER_PASSWORD | sudo -S docker restart prod1
+sleep $WAIT_TIME
+
 #===============================현재 서버 Health check=================================
 
 # Prod2 작업
 # (2.1)
-BUILD_PATH_PROD2=$(ls -tr ${HOME}/prod2/*.war | tail -1)
+BUILD_PATH_PROD2=$(ls -tr $HOME/prod2/*.war | tail -1)
 WAR_PATH_PROD2=$(basename $BUILD_PATH_PROD2)
 echo "> build file for prod2: $WAR_PATH_PROD2"
 
 # (2.2)
 echo "> copy build file for prod2"
-DEPLOY_PATH_PROD2=${HOME}/prod2/
+DEPLOY_PATH_PROD2=$HOME/prod2
 if [ ! -d $DEPLOY_PATH_PROD2 ]; then
   mkdir $DEPLOY_PATH_PROD2
 fi
