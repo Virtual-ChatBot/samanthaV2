@@ -106,7 +106,7 @@ echo "> 5초 후 Health check 시작"
 echo "> curl -s http://$SERVER_IP:$PROD2_PORT/actuator/health"
 
 for retry_count in {1..3}; do
-  response=$(sudo curl -s http://$MY_IP:$DEPLOYED_PORT/actuator/health)
+  response=$(sudo curl -s http://$SERVER_IP:$PROD2_PORT/actuator/health)
   up_count=$(echo $response | grep 'UP' | wc -l)
   if [ $up_count -ge 1 ]; then
     echo "> Health check 성공"
