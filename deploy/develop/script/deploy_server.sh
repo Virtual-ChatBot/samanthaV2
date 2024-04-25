@@ -1,3 +1,5 @@
+#deploy_server.sh
+
 HOME=/home/samantha/tomcat_data
 WAR_NAME=ROOT.war
 WAIT_TIME=10
