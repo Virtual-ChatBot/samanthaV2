@@ -38,8 +38,9 @@ pipeline {
                 	// (4)
                     SERVER_LIST.tokenize(',').each { server ->
                         SERVER_PORT.tokenize(',').each { port ->
-                         echo "SERVER_LIST: ${server}, SERVER_PORT: ${port}"
-                        ssh_publisher(server, port)
+                            echo "SERVER_LIST: ${server}, SERVER_PORT: ${port}"
+                            ssh_publisher(server, port)
+                        }
                     }
                 }
             }
