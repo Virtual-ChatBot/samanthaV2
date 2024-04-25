@@ -1,5 +1,5 @@
 REPOSITORY=/home/samantha/tomcat_data
-WAIT_TIME=20
+WAIT_TIME=1
 
 # Prod1 작업
 # (1.1)

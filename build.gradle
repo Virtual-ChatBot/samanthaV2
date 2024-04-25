@@ -19,6 +19,7 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:3.2.4'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.4'
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:10.1.19'
     implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
     implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
