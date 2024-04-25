@@ -9,7 +9,7 @@ DOCKER_PASSWORD=$1
 SERVER_IP=$2
 PROD1_PORT=$3
 PROD2_PORT=$4
-SERVER_LIST=&5
+SERVER_LIST=$5
 
 #스크립트 내에서 변수 사용
 echo "Docker Password: $DOCKER_PASSWORD"
