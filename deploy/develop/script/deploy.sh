@@ -30,6 +30,11 @@ if [ ! -d $DEPLOY_PATH_PROD1 ]; then
   mkdir $DEPLOY_PATH_PROD1
 fi
 cp $BUILD_PATH_PROD1 $DEPLOY_PATH_PROD1
+
+echo "> 배포"
+echo "> 파일명" $HOME/$WAR_NAME
+echo $DOCKER_PASSWORD | sudo -S docker restart prod1
+sleep $WAIT_TIME
 #===================================생존 서버 확인=====================================
 echo "> 5초 후 Health check 시작"
 echo "> curl -s http://$SERVER_IP:$PROD1_PORT/actuator/health"
@@ -98,10 +103,7 @@ then
     done
 fi
 #=======================================배포2===========================================
-#echo "> 배포"
-#echo "> 파일명" $HOME/$WAR_NAME
-#echo $DOCKER_PASSWORD | sudo -S docker restart prod1
-sleep $WAIT_TIME
+
 
 #==================================현재 서버 확인======================================
 echo "> 5초 후 Health check 시작"
@@ -191,6 +193,6 @@ if [ ! -d $DEPLOY_PATH_PROD2 ]; then
 fi
 cp $BUILD_PATH_PROD2 $DEPLOY_PATH_PROD2
 
-#echo "> 배포"
-#echo "> 파일명" $HOME/$WAR_NAME
-#echo $DOCKER_PASSWORD | sudo -S docker restart prod2
+echo "> 배포"
+echo "> 파일명" $HOME/$WAR_NAME
+echo $DOCKER_PASSWORD | sudo -S docker restart prod2
