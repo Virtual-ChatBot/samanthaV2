@@ -18,25 +18,6 @@ echo "Prod1 Port: $PROD1_PORT"
 echo "Prod2 Port: $PROD2_PORT"
 echo "Server Config: $SERVER_LIST"
 
-#=======================================배포1===========================================
-# Prod1 작업
-# (1.1)
-BUILD_PATH_PROD1=$(ls -tr $HOME/$SERVER_LIST/*.war | tail -1)
-WAR_PATH_PROD1=$(basename $BUILD_PATH_PROD1)
-echo "> build file for prod1: $WAR_PATH_PROD1"
-
-# (1.2)
-echo "> copy build file for prod1"
-DEPLOY_PATH_PROD1=$HOME/prod1
-if [ ! -d $DEPLOY_PATH_PROD1 ]; then
-  mkdir $DEPLOY_PATH_PROD1
-fi
-cp $BUILD_PATH_PROD1 $DEPLOY_PATH_PROD1
-
-echo "> 배포"
-echo "> 파일명" $HOME/$WAR_NAME
-echo $DOCKER_PASSWORD | sudo -S docker restart prod1
-sleep $WAIT_TIME
 #===================================생존 서버 확인=====================================
 echo "> 5초 후 Health check 시작"
 echo "> curl -s http://$SERVER_IP:$PROD1_PORT/actuator/health"
@@ -104,3 +85,24 @@ then
         kill -9 $PID
     done
 fi
+
+#=======================================배포1===========================================
+# Prod1 작업
+# (1.1)
+sleep $WAIT_TIME
+
+BUILD_PATH_PROD1=$(ls -tr $HOME/$SERVER_LIST/*.war | tail -1)
+WAR_PATH_PROD1=$(basename $BUILD_PATH_PROD1)
+echo "> build file for prod1: $WAR_PATH_PROD1"
+
+# (1.2)
+echo "> copy build file for prod1"
+DEPLOY_PATH_PROD1=$HOME/prod1
+if [ ! -d $DEPLOY_PATH_PROD1 ]; then
+  mkdir $DEPLOY_PATH_PROD1
+fi
+cp $BUILD_PATH_PROD1 $DEPLOY_PATH_PROD1
+
+echo "> 배포"
+echo "> 파일명" $HOME/$WAR_NAME
+echo $DOCKER_PASSWORD | sudo -S docker restart prod1
