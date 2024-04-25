@@ -23,6 +23,9 @@ APPLICATION_WAR_PROD1=$DEPLOY_PATH_PROD1$APPLICATION_WAR_NAME_PROD1
 echo "> create link for prod1"
 ln -Tfs $CP_WAR_PATH_PROD1 $APPLICATION_WAR_PROD1
 
+# Add sleep after deployment for prod1
+sleep $WAIT_TIME
+
 # (1.3)
 echo "> Check application PID for prod1."
 CURRENT_PID_PROD1=$(pgrep -f -n $APPLICATION_WAR_NAME_PROD1)
@@ -56,13 +59,16 @@ APPLICATION_WAR_PROD2=$DEPLOY_PATH_PROD2$APPLICATION_WAR_NAME_PROD2
 echo "> create link for prod2"
 ln -Tfs $CP_WAR_PATH_PROD2 $APPLICATION_WAR_PROD2
 
+# Add sleep after deployment for prod2
+sleep $WAIT_TIME
+
 # (2.3)
 echo "> Check application PID for prod2."
 CURRENT_PID_PROD2=$(pgrep -f -n $APPLICATION_WAR_NAME_PROD2)
 echo "$CURRENT_PID_PROD2"
 
 if [ -z $CURRENT_PID_PROD2 ]; then
-    sleep $WAIT_TIME
     echo "> Restarting Docker container for prod2"
     echo "Qkrdydclf12" | sudo -S docker restart prod2
+    sleep $WAIT_TIME
 fi
