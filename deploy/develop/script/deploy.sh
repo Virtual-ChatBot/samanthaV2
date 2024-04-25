@@ -10,9 +10,6 @@ SERVER_IP=$2
 PROD1_PORT=$3
 PROD2_PORT=$4
 
-loop=1
-limitLoop=30
-
 #스크립트 내에서 변수 사용
 echo "Docker Password: $DOCKER_PASSWORD"
 echo "Server IP: $SERVER_IP"
@@ -52,6 +49,10 @@ do
 done
 
 #===================================프로세스 종료======================================
+loop=1
+limitLoop=30
+flag='false'
+
 echo "> 구동중인 애플리케이션 pid 확인"
 IDLE_PID=(`ps -ef | grep  $WAR_NAME | grep -v 'grep' | awk '{ print $2 }'`)
  if [ ${#IDLE_PID[@]} = 0 ]
