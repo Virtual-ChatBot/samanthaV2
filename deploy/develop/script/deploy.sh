@@ -33,7 +33,7 @@ cp $BUILD_PATH_PROD1 $DEPLOY_PATH_PROD1
 echo "> 서버 체크 시작"
 for retry_count in {1..10};
 do
-  response=$(sudo curl -s http://$SERVER_IP:$PROD1_PORT/actuator/health)
+  response=$(echo $DOCKER_PASSWORD | sudo curl -s http://$SERVER_IP:$PROD1_PORT/actuator/health)
   up_count=$(echo $response | grep 'UP' | wc -l)
   echo "> $retry_count : $response  : $up_count"
   if [ $up_count -ge 1 ]; then
@@ -97,7 +97,7 @@ fi
 #=======================================배포===========================================
 if [ -z $CURRENT_PID_PROD1 ]; then
     echo "> Restarting Docker container for prod1"
-    echo "$DOCKER_PASSWORD" | sudo -S docker restart prod1
+    echo $DOCKER_PASSWORD | sudo -S docker restart prod1
     sleep $WAIT_TIME
 fi
 #===============================현재 서버 Health check=================================
@@ -124,6 +124,6 @@ echo "$CURRENT_PID_PROD2"
 if [ -z $CURRENT_PID_PROD2 ]; then
     sleep $WAIT_TIME
     echo "> Restarting Docker container for prod2"
-    echo "$DOCKER_PASSWORD" | sudo -S docker restart prod2
+    echo $DOCKER_PASSWORD | sudo -S docker restart prod2
 fi
 #===============================현재 서버 Health check=================================
