@@ -1,5 +1,5 @@
 REPOSITORY=/home/samantha/tomcat_data
-WAIT_TIME=30
+WAIT_TIME=20
 
 # Prod1 작업
 # (1.1)
@@ -31,6 +31,7 @@ echo "$CURRENT_PID_PROD1"
 if [ -z $CURRENT_PID_PROD1 ]; then
     echo "> Restarting Docker container for prod1"
     echo "Qkrdydclf12" | sudo -S docker restart prod1
+    sleep $WAIT_TIME
 fi
 
 # Prod2 작업
@@ -61,6 +62,7 @@ CURRENT_PID_PROD2=$(pgrep -f -n $APPLICATION_WAR_NAME_PROD2)
 echo "$CURRENT_PID_PROD2"
 
 if [ -z $CURRENT_PID_PROD2 ]; then
+    sleep $WAIT_TIME
     echo "> Restarting Docker container for prod2"
     echo "Qkrdydclf12" | sudo -S docker restart prod2
 fi
