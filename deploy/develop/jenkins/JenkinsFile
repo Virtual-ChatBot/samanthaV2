@@ -37,10 +37,8 @@ pipeline {
                 script {
                 	// (4)
                     SERVER_LIST.tokenize(',').each {
-                        SERVER_PORT.tokenize(',').each {
-                            echo "SERVER_LIST: ${it}"
-                            ssh_publisher("${it}")
-                        }
+                        echo "SERVER_LIST: ${it}"
+                        ssh_publisher("${it}")
                     }
                 }
             }
