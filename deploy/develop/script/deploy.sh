@@ -31,8 +31,10 @@ if [ ! -d $DEPLOY_PATH_PROD1 ]; then
 fi
 cp $BUILD_PATH_PROD1 $DEPLOY_PATH_PROD1
 #===================================생존 서버 확인=====================================
-echo "> 서버 체크 시작"
-for retry_count in {1..3};
+echo "> 5초 후 Health check 시작"
+echo "> curl -s http://$SERVER_IP:$PROD1_PORT/actuator/health"
+
+for retry_count in {1..5};
 do
   response=$(curl -s http://$SERVER_IP:$PROD1_PORT/actuator/health)
   up_count=$(echo $response | grep 'UP' | wc -l)
@@ -41,7 +43,7 @@ do
     echo "> 서버 health 체크 성공"
     break
   fi
-  if [ $retry_count -eq 3 ]; then
+  if [ $retry_count -eq 5 ]; then
     echo "> 서버 health 체크 실패"
     exit 1
   fi
@@ -96,16 +98,16 @@ then
     done
 fi
 #=======================================배포2===========================================
-echo "> 배포"
-echo "> 파일명" $HOME/$WAR_NAME
-echo $DOCKER_PASSWORD | sudo -S docker restart prod1
+#echo "> 배포"
+#echo "> 파일명" $HOME/$WAR_NAME
+#echo $DOCKER_PASSWORD | sudo -S docker restart prod1
 sleep $WAIT_TIME
 
 #==================================현재 서버 확인======================================
 echo "> 5초 후 Health check 시작"
 echo "> curl -s http://$SERVER_IP:$PROD2_PORT/actuator/health"
 
-for retry_count in {1..3}; do
+for retry_count in {1..5}; do
   response=$(sudo curl -s http://$SERVER_IP:$PROD2_PORT/actuator/health)
   up_count=$(echo $response | grep 'UP' | wc -l)
   if [ $up_count -ge 1 ]; then
@@ -116,7 +118,7 @@ for retry_count in {1..3}; do
     echo "> Health check: ${response}"
   fi
 
-  if [ $retry_count -eq 3 ]; then
+  if [ $retry_count -eq 5 ]; then
     echo "> Health check 실패. "
     echo "> Nginx에 연결하지 않고 배포를 종료합니다."
     exit 1
@@ -173,6 +175,8 @@ then
     done
 fi
 #=======================================배포===========================================
+sleep $WAIT_TIME
+
 # Prod2 작업
 # (2.1)
 BUILD_PATH_PROD2=$(ls -tr $HOME/prod2/*.war | tail -1)
@@ -187,7 +191,6 @@ if [ ! -d $DEPLOY_PATH_PROD2 ]; then
 fi
 cp $BUILD_PATH_PROD2 $DEPLOY_PATH_PROD2
 
-echo "> 배포"
-echo "> 파일명" $HOME/$WAR_NAME
-echo $DOCKER_PASSWORD | sudo -S docker restart prod2
-sleep $WAIT_TIME
+#echo "> 배포"
+#echo "> 파일명" $HOME/$WAR_NAME
+#echo $DOCKER_PASSWORD | sudo -S docker restart prod2
