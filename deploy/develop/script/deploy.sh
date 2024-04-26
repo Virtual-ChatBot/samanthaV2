@@ -7,20 +7,20 @@ echo "> build 파일명: $WAR_NAME"
 #Jenkins 환경 변수에서 전달한 값
 DOCKER_PASSWORD=$1
 SERVER_IP=$2
-PROD_PORT=$3
-PROD_PORT=$4
+PROD1_PORT=$3
+PROD2_PORT=$4
 SERVER_LIST=$5
 
 #스크립트 내에서 변수 사용
 echo "Docker Password: $DOCKER_PASSWORD"
 echo "Server IP: $SERVER_IP"
-echo "Prod1 Port: $PROD_PORT"
-echo "Prod2 Port: $PROD_PORT"
+echo "Prod1 Port: $PROD1_PORT"
+echo "Prod2 Port: $PROD2_PORT"
 echo "Server Config: $SERVER_LIST"
 
 #===================================생존 서버 확인=====================================
 echo "> 서버 체크 시작"
-echo "> curl -s http://$SERVER_IP:$PROD_PORT/actuator/health"
+echo "> curl -s http://$SERVER_IP:$PROD1_PORT/actuator/health"
 
 for retry_count in {1..3};
 do
