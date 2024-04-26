@@ -65,7 +65,7 @@ def ssh_publisher(SERVER_LIST) {
                         removePrefix: "build/libs",
                         remoteDirectory: "/",
                         // Absolute path.
-                        execCommand: "sh /home/samantha/tomcat_data/${SERVER_LIST}/script/deploy.sh ${DOCKER_PASSWORD} ${SERVER_IP} ${PROD1_PORT} ${PROD2_PORT} ${SERVER_LIST}"
+                        execCommand: "sh /home/samantha/tomcat_data/${SERVER_LIST}/script/deploy.sh ${DOCKER_PASSWORD} ${SERVER_IP} ${PROD_PORT} ${SERVER_LIST}"
                     )
                 ]
             )
