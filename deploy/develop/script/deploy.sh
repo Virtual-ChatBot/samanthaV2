@@ -58,7 +58,7 @@ else
   do
     response=$(curl -s http://$SERVER_IP:$PROD1_PORT/actuator/health)
     up_count=$(echo $response | grep 'UP' | wc -l)
-    if [ $up_count -eq 0 ]; then
+    if [ $up_count -eq 1 ]; then
         echo "> 성공적으로 서버를 재시작하였습니다."
         flag='true'
         break
