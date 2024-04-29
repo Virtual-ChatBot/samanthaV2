@@ -21,8 +21,15 @@ check_server_health() {
     local retry_count=0
     while [ $retry_count -lt $MAX_RETRY ]; do
         response=$(curl -s --max-time 10 http://$SERVER_IP:$PROD_PORT/actuator/health)
-        up_count=$(echo $response | grep 'UP' | wc -l)
+        up_count=$(echo $response | grep -o 'UP' | wc -l)
         echo "> Retry: $((retry_count+1)), Response: $response, UP Count: $up_count"
+
+        if ! [[ "$up_count" =~ ^[0-9]+$ ]]; then
+            echo "> 서버 health 체크 오류: UP Count가 숫자가 아닙니다."
+            ((retry_count++))
+            continue
+        fi
+
         if [ $up_count -ge 1 ]; then
             echo "> 서버 health 체크 성공"
             return 0
