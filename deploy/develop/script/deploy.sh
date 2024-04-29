@@ -70,10 +70,10 @@ fi
 if [ $flag == 'false' ]; then
     echo "> 서버 강제종료 시도"
     if [ $loop -gt $limitLoop ]; then
-        echo "> 서버 종료를 기다리는 동안 시간이 초과되었습니다. 강제 종료를 시도합니다."
+        echo "> 서버 종료를 기다리는 동안 시간이 초과되었습니다. 서버 강제 종료합니다."
         echo $DOCKER_PASSWORD | sudo -S docker restart $SERVER_LIST
     else
-        echo "> [$SERVER_LIST] 프로세스 강제 종료합니다."
+        echo "> [$SERVER_LIST] 서버 강제 종료합니다."
         echo $DOCKER_PASSWORD | sudo -S docker restart $SERVER_LIST
     fi
 fi
