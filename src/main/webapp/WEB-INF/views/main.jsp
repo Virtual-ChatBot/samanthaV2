@@ -82,7 +82,7 @@
 					</li>
 
 					<li>
-						<a href="generic.html">게시판</a>
+						<a href="generic.html">배포</a>
 					</li>
 				</ul>
 			</nav>
@@ -159,7 +159,7 @@
 							</span>
 
 							<a href="generic.html">
-								<h2>&nbsp;게시판</h2>
+								<h2>&nbsp;배포</h2>
 
 								<div class="content">
 									<br>
