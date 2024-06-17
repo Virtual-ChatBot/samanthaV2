@@ -1,7 +1,5 @@
-// (1)
 pipeline {
     environment {
-        // (2) Registered in Jenkins
         SERVER_LIST = "prod1,prod2"
     }
 
@@ -20,11 +18,15 @@ pipeline {
             }
         }
 
-        stage("Build") {
-        	// (3)
+        stage("SonarQube analysis") {
             steps {
-                sh "chmod +x gradlew"
-                sh "./gradlew clean bootWar"
+                withSonarQubeEnv('SonarQube-Server'){
+                    sh "chmod +x gradlew"
+                    sh "./gradlew sonar clean bootWar \
+                        -Dsonar.projectKey=samantha \
+                        -Dsonar.host.url=http://112.172.203.227:9000 \
+                        -Dsonar.login=sqp_36b869e21825d6eab8bc2b3728031032bd921b85"
+                }
             }
         }
 
@@ -34,7 +36,6 @@ pipeline {
                 echo "${SERVER_LIST}"
 
                 script {
-                	// (4)
                     SERVER_LIST.tokenize(',').each {
                         echo "SERVER: ${it}"
                         ssh_publisher("${it}")
@@ -42,10 +43,30 @@ pipeline {
                 }
             }
         }
+
+        stage('SonarQube Quality Gate'){
+            steps{
+                timeout(time: 1, unit: 'MINUTES') {
+                    script{
+                        echo "Start"
+                        def qg = waitForQualityGate()
+                        echo "Status: ${qg.status}"
+                        if(qg.status != 'OK') {
+                            echo "NOT OK Status: ${qg.status}"
+                            updateGitlabCommitStatus(name: "SonarQube Quality Gate", state: "failed")
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        } else{
+                            echo "OK Status: ${qg.status}"
+                            updateGitlabCommitStatus(name: "SonarQube Quality Gate", state: "success")
+                        }
+                        echo "End"
+                    }
+                }
+            }
+        }
     }
 }
 
-// (5)
 def ssh_publisher(SERVER_LIST) {
     sshPublisher(
         publishers:[
@@ -53,18 +74,15 @@ def ssh_publisher(SERVER_LIST) {
                 configName: "${SERVER_LIST}",
                 verbose: true,
                 transfers: [
-                    // (5.1) Copy script files
                     sshTransfer(
                         sourceFiles: "deploy/develop/script/*.sh",
                         removePrefix: "deploy/develop/script",
                         remoteDirectory: "script"
                     ),
-                    // (5.2) Copy build files
                     sshTransfer(
                         sourceFiles: "build/libs/*.war",
                         removePrefix: "build/libs",
                         remoteDirectory: "/",
-                        // Absolute path.
                         execCommand: "sh /home/samantha/tomcat_data/${SERVER_LIST}/script/deploy.sh ${DOCKER_PASSWORD} ${SERVER_IP} ${PROD_PORT} ${SERVER_LIST}"
                     )
                 ]
