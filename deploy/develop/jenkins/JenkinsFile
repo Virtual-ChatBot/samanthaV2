@@ -6,7 +6,7 @@ pipeline {
     agent any
 
     stages {
-        stage('read configFile') {
+        stage('Preparation') {
             steps {
                 configFileProvider([configFile(fileId: 'prod', targetLocation: 'src/main/resources/application.properties')]) {
                     sh "cat src/main/resources/application.properties"
@@ -18,7 +18,7 @@ pipeline {
             }
         }
 
-        stage("SonarQube analysis") {
+        stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('SonarQube-Server') {
                     sh "chmod +x gradlew"
@@ -48,7 +48,7 @@ pipeline {
             }
         }
 
-        stage("Deploy") {
+        stage('Deploy') {
             steps {
                 echo "deploy.."
                 echo "${SERVER_LIST}"
