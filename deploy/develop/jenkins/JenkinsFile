@@ -21,8 +21,7 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('SonarQube-Server') {
-                    sh "chmod +x gradlew"
-                    sh "./gradlew clean bootWar sonar -Dsonar.projectKey=samantha -Dsonar.host.url=http://112.172.203.227:9000 -Dsonar.login=sqp_63a044038e534ee1d8415ea1308eeb2c3e607670 --warning-mode all"
+                    sh "./gradlew clean sonar -Dsonar.projectKey=samantha -Dsonar.host.url=http://112.172.203.227:9000 -Dsonar.login=sqp_63a044038e534ee1d8415ea1308eeb2c3e607670 --warning-mode all"
                 }
             }
         }
@@ -45,6 +44,13 @@ pipeline {
                         echo "End"
                     }
                 }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh "chmod +x gradlew"
+                sh "./gradlew bootWar"
             }
         }
 
