@@ -21,7 +21,7 @@ pipeline {
         stage("SonarQube analysis") {
             steps {
                 sh "chmod +x gradlew"
-                sh "./gradlew clean bootWar sonar --warning-mode all \
+                sh "./gradlew clean build --refresh-dependencies bootWar sonar --warning-mode all \
                     -Dsonar.projectKey=samantha \
                     -Dsonar.host.url=http://112.172.203.227:9000 \
                     -Dsonar.login=sqp_36b869e21825d6eab8bc2b3728031032bd921b85"
