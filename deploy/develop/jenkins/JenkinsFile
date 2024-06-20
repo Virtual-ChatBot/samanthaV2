@@ -20,7 +20,7 @@ pipeline {
 
         stage("SonarQube analysis") {
             steps {
-                withSonarQubeEnv('SonarQube-Server'){
+                withSonarQubeEnv('SonarQube-Server') {
                     sh "chmod +x gradlew"
                     sh "./gradlew clean bootWar sonar \
                         -Dsonar.projectKey=samantha \
