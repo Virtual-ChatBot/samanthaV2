@@ -22,7 +22,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('SonarQube-Server') {
                     sh "chmod +x gradlew"
-                    sh "./gradlew clean bootWar sonar \
+                    sh "./gradlew clean build bootWar sonar \
                         -Dsonar.projectKey=samantha \
                         -Dsonar.host.url=http://112.172.203.227:9000 \
                         -Dsonar.login=sqp_36b869e21825d6eab8bc2b3728031032bd921b85"
