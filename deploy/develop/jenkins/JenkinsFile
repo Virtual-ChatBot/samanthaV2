@@ -1,9 +1,6 @@
 pipeline {
     environment {
         SERVER_LIST = "prod1,prod2"
-        SONAR_SCANNER_HOME = tool 'sonar-scanner'
-        SONAR_PROJECT_KEY = 'your-project-key'
-        SONAR_ANALYSIS_VERSION = new Date().format('yyyy-MM', TimeZone.getTimeZone('Asia/Seoul'))
     }
 
     agent any
