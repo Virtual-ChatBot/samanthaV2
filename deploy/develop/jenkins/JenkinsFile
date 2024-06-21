@@ -22,7 +22,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('SonarQube-Server') {
                     sh "chmod +x gradlew"
-                    sh "./gradlew clean bootWar sonar -Dsonar.projectKey=samantha -Dsonar.host.url=http://112.172.203.227:9000 -Dsonar.login=sqp_63a044038e534ee1d8415ea1308eeb2c3e607670 --warning-mode all"
+                    sh "./gradlew clean sonar -Dsonar.projectKey=samantha -Dsonar.host.url=http://112.172.203.227:9000 -Dsonar.login=sqp_63a044038e534ee1d8415ea1308eeb2c3e607670 --warning-mode all"
                 }
             }
         }
@@ -36,11 +36,11 @@ pipeline {
                         echo "Status: ${qg.status}"
                         if(qg.status != 'OK') {
                             echo "NOT OK Status: ${qg.status}"
-                            updateGitlabCommitStatus(name: "SonarQube Quality Gate", state: "failed")
+                            updateGitHubCommitStatus(name: "SonarQube Quality Gate", state: "failed")
                             error "Pipeline aborted due to quality gate failure: ${qg.status}"
                         } else {
                             echo "OK Status: ${qg.status}"
-                            updateGitlabCommitStatus(name: "SonarQube Quality Gate", state: "success")
+                            updateGitHubCommitStatus(name: "SonarQube Quality Gate", state: "success")
                         }
                         echo "End"
                     }
@@ -51,6 +51,20 @@ pipeline {
         stage('Build') {
             steps {
                 sh "./gradlew bootWar"
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo "deploy.."
+                echo "${SERVER_LIST}"
+
+                script {
+                    SERVER_LIST.tokenize(',').each {
+                        echo "SERVER: ${it}"
+                        ssh_publisher("${it}")
+                    }
+                }
             }
         }
     }
