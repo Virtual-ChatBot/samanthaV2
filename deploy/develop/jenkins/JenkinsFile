@@ -17,7 +17,7 @@ pipeline {
                 }
 
                 configFileProvider([configFile(fileId: 'gradle', targetLocation: './gradle.properties')]) {
-                    sh "cat /var/jenkins_home/workspace/prod/"
+                    sh "cat /var/jenkins_home/workspace/prod/gradle.properties"
                 }
             }
         }
