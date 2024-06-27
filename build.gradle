@@ -15,7 +15,15 @@ java {
 }
 
 repositories {
-    mavenCentral()
+    // mavenCentral()
+    maven {
+        url "http://112.172.203.227:8083/repository/maven-central/" // Nexus repository url
+        allowInsecureProtocol true // http 통신
+        credentials {
+            username nexusUsername
+            password nexusPassword
+        }
+    }
 }
 
 dependencies {
